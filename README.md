@@ -1,5 +1,5 @@
 # Running MicroGPT on your computer — Step by Step
-[MicroGPT] (https://karpathy.github.io/2026/02/12/microgpt/) is a script written by Andrej Karpathy. This is a slight modification to get you up and running on your own machine.
+[MicroGPT](https://karpathy.github.io/2026/02/12/microgpt/) is a script written by Andrej Karpathy. This is a slight modification to get you up and running on your own machine.
 
 ## Before you start
 You need **Python 3** installed. To check, open your Terminal (Mac) or Command Prompt (Windows) and type:
