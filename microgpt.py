@@ -16,9 +16,11 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--input',     required=True, help='Path to input .txt file')
-parser.add_argument('--n_embd',    type=int, default=32,   help='Embedding dimension (default: 16, max: 256)')
-parser.add_argument('--n_layer',   type=int, default=2,    help='Number of transformer layers (default: 1, max: 8)')
-parser.add_argument('--num_steps', type=int, default=5000, help='Number of training steps (default: 1000, max: 20000)')
+parser.add_argument('--n_embd',    type=int, default=16,   help='Embedding dimension (default: 16, max: 256)')
+parser.add_argument('--n_layer',   type=int, default=1,    help='Number of transformer layers (default: 1, max: 8)')
+parser.add_argument('--num_steps', type=int, default=2000, help='Number of training steps (default: 1000, max: 20000)')
+parser.add_argument('--seed',       type=str, default=None, help='Optional seed word or phrase to start generation')
+parser.add_argument('--num_samples', type=int, default=20,  help='Number of lines to generate (default: 20)')
 args = parser.parse_args()
 
 # Assertions to prevent students from setting values too high
@@ -204,13 +206,25 @@ for step in range(num_steps):
     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.data:.4f}", end='\r')
 
 # Inference: may the model babble back to us
-temperature = 0.5 # in (0, 1], control the "creativity" of generated text, low to high
+temperature = 0.5
 print("\n--- inference (new, hallucinated names) ---")
-for sample_idx in range(20):
+for sample_idx in range(args.num_samples):
     keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
-    token_id = BOS
     sample = []
-    for pos_id in range(block_size):
+
+    if args.seed:
+        # Seed the model with the provided phrase
+        seed_tokens = [BOS] + [uchars.index(ch) for ch in args.seed if ch in uchars]
+        for pos_id, token_id in enumerate(seed_tokens[:-1]):
+            logits = gpt(token_id, pos_id, keys, values)
+        token_id = seed_tokens[-1]
+        start_pos = len(seed_tokens) - 1
+        sample.extend(list(args.seed))
+    else:
+        token_id = BOS
+        start_pos = 0
+
+    for pos_id in range(start_pos, block_size):
         logits = gpt(token_id, pos_id, keys, values)
         probs = softmax([l / temperature for l in logits])
         token_id = random.choices(range(vocab_size), weights=[p.data for p in probs])[0]

@@ -92,6 +92,8 @@ You can adjust three settings to change how the model trains:
 | `--n_embd` | Controls how many features the model tracks per character. Low = can only learn simple patterns like "this name starts with a capital". High = can learn complex patterns like "bird names often have a color followed by a body part". Must be a multiple of 4. | 16 | 8 – 256 |
 | `--n_layer` | Controls how many times the model re-processes its own thinking. 1 layer = one pass at the pattern. 4 layers = the model can build on its own earlier conclusions, like first learning word structure, then learning how words combine. | 1 | 1 – 8 |
 | `--num_steps` | How many training examples the model sees. More steps = more practice, up to a point. Too few and the model hasn't learned enough. Too many and you're just waiting with no benefit. | 1000 | 1 – 20000 |
+| `--num_samples` | How many examples the model generates after training. | 20 | Any positive number |
+| `--seed` | A word or phrase the model uses as a starting point when generating output. For example, `--seed "Ru"` will begin every generated name with those characters and continue from there. Only characters that appear in your training data will work — others are silently skipped. | none | Any short word or phrase |
 
 Example — a bigger, longer-trained model:
 
