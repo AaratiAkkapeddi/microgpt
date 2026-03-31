@@ -117,3 +117,19 @@ python microgpt.py --input names.txt --n_embd 32 --n_layer 2 --num_steps 5000
 **`No such file or directory`** — The terminal isn't in the right folder. Repeat Step 2, or try the drag-and-drop tip above.
 
 **`AssertionError`** — One of your settings is outside the safe range. Read the error message — it will tell you exactly which one.
+
+
+------
+Using text_splitter.py
+
+You can use this python file to split up a .txt file into single words per line. 
+You can also set options so that its 2 or 3 or however many words per line instead of just 1. Put your original .txt file in this folder then run...
+
+```python
+python3 text_splitter.py --input name_of_your_original_file.txt --output name_of_file_you_want_to_output.txt
+```
+
+to get more than one word per line just change the number after --n in this code below
+```python
+python3 text_splitter.py --input name_of_your_original_file.txt --output name_of_file_you_want_to_output.txt --n 2
+```
