@@ -43,7 +43,7 @@ Place your `.txt` file in the same folder as `microgpt.py`.
 > If you'd like to just test with sample data, there's a file containing the 21,000 class names used to train imagenet in this folder that you may use (`imagenet21k_classes.txt`).
 
 **Format**
-Your file should be plain text (`.txt`) with **one item per line**. Each line is treated as a single training example — the model learns the patterns within each line, not across the whole file.
+Your file should be plain text (`.txt`) with **no more than 16 characters per line**. Each line is treated as a single training example — the model learns the patterns within each line, not across the whole file.
 
 example:
 ```
@@ -56,10 +56,9 @@ Rufous Hummingbird
 
 **Guidelines**
 - names, species, places, titles, ingredients. Anything where each line follows a similar pattern.
-- 5,000–20,000 lines is ideal for this script.
+- 5,000–32,000 lines is ideal for this script.
 - the model handles up to 16 characters per line by default. Longer lines get cut off.
-- Avoid long paragraphs or sentences — this script is designed for short items, not prose
-- Avoid lots of rare characters like emoji, accents, or symbols — they bloat the vocabulary and confuse the model
+
 
 ---
 
@@ -91,7 +90,7 @@ You can adjust three settings to change how the model trains:
 |---|---|---|---|
 | `--n_embd` | Controls how many features the model tracks per character. Low = can only learn simple patterns like "this name starts with a capital". High = can learn complex patterns like "bird names often have a color followed by a body part". Must be a multiple of 4. | 16 | 8 – 256 |
 | `--n_layer` | Controls how many times the model re-processes its own thinking. 1 layer = one pass at the pattern. 4 layers = the model can build on its own earlier conclusions, like first learning word structure, then learning how words combine. | 1 | 1 – 8 |
-| `--num_steps` | How many training examples the model sees. More steps = more practice, up to a point. Too few and the model hasn't learned enough. Too many and you're just waiting with no benefit. | 1000 | 1 – 20000 |
+| `--num_steps` | How many training examples the model sees. More steps = more practice, up to a point. Too few and the model hasn't learned enough. Too many and you're training time will be too long. | 1000 | 1 – 20000 |
 | `--num_samples` | How many examples the model generates after training. | 20 | Any positive number |
 | `--seed` | A word or phrase the model uses as a starting point when generating output. For example, `--seed "Ru"` will begin every generated name with those characters and continue from there. Only characters that appear in your training data will work — others are silently skipped. | none | Any short word or phrase |
 
