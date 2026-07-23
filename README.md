@@ -80,7 +80,7 @@ num params: 7040
 step  100 / 1000 | loss 2.8421
 ```
 Training will take a few minutes. When it's done it will print 20 generated names.
-
+> If you're on a windows computer you may have issues with text encoding (shout out to Benjamin Santiago for pointing this out) so run `python -X utf8 microgpt.py --input pope_wrapped.txt` instead. So basicaly add `-X utf8` in between your python and microgpt.py in your command.
 ---
 
 ## Step 5 — Experiment with settings (optional)
@@ -106,7 +106,7 @@ python microgpt.py --input names.txt --n_embd 32 --n_layer 2 --num_steps 5000
 ```
 
 > ⚠️ Higher values = slower training. Stick within the safe ranges above or the script will warn you.
-
+>
 ---
 
 ## Common errors
